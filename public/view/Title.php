@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class Title
+ */
 class Title
 {
     const noneTitle = "";
