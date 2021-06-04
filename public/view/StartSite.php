@@ -17,6 +17,11 @@ function buildSchedulePart($timeslot, $theme, $speaker)
 {
     echo "<p><b>$timeslot</b> $theme $speaker<br></p>";
 }
+
+function buildScheduleBottom()
+{
+    echo "</div>";
+}
 /**
  * Build the bottom of the site
  */

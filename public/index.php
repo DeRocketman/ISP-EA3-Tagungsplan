@@ -41,8 +41,18 @@ function buildConference(): Conference
 function buildStartSite()
 {
     $conf = buildConference();
+    $conf->createDaySchedules();
     buildHeaderAndHeadline($conf->getWelcomeText(), $conf->getName(), $conf->getCity());
-    //foreach ()
+    foreach ($conf->getDayScheduleList() as $daySchedule)
+    {
+        $date = $daySchedule->getDate;
+        buildScheduleHead($date);
+        buildSchedulePart("DummyDatum", "DummyThema", "Hans Pusemukkel");
+        buildScheduleBottom();
+        buildBottom();
+    }
 }
+
+buildStartSite();
 
 session_destroy();
