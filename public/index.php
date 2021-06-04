@@ -6,43 +6,43 @@
  * @date 18.05.2021
  * @version 1.20210518.1016
  */
-    require_once("mainProgram.php");
+require_once __DIR__.DIRECTORY_SEPARATOR."model".DIRECTORY_SEPARATOR."Speaker.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."model".DIRECTORY_SEPARATOR."Session.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."model".DIRECTORY_SEPARATOR."DaySchedule.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."model".DIRECTORY_SEPARATOR."Conference.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."view".DIRECTORY_SEPARATOR."Title.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."view".DIRECTORY_SEPARATOR."StartSite.php";
+require_once __DIR__.DIRECTORY_SEPARATOR."view".DIRECTORY_SEPARATOR."SiteOfEdit.php";
 
-function buildHeaderAndHeadline($welcome, $conferenceName, $city)
+session_start();
+
+function readJSON()
 {
-    echo "<!DOCTYPE html>
-          <html lang=\"de\">
-          <head><title>Konferenzplaner</title>
-          </head>
-          <body>
-          <h1>$welcome <br>$conferenceName in $city</h1>";
+    $jsonFile   = file_get_contents('data/conference.json', true);
+    return json_decode($jsonFile);
 }
-function buildScheduleHead($date)
+
+function buildConference(): Conference
 {
-    echo "<div>Tagungsprogramm am $date";
+    $jsonArray = readJSON();
+    $conferenceName= $jsonArray->conferenceName;
+    $conferenceWelcomeText= $jsonArray->welcomeText;
+    $conferenceDates = $jsonArray->dates;
+    $conferenceCity= $jsonArray->city;
+    $conferenceLocation= $jsonArray->location;
+    $conferenceRoomList= $jsonArray->roomList;
+    $conferenceScheduleTimes= $jsonArray->scheduleTimes;
+    $conferenceDayScheduleList= $jsonArray->dayScheduleList;
+
+    return new Conference($conferenceName, $conferenceWelcomeText, $conferenceDates,
+        $conferenceCity, $conferenceLocation, $conferenceRoomList, $conferenceDayScheduleList ,$conferenceScheduleTimes);
 }
-function buildSchedulePart($timeslot, $theme, $speaker)
+
+function buildStartSite()
 {
-    echo "<p><b>$timeslot</b> $theme $speaker<br></p>";
+    $conf = buildConference();
+    buildHeaderAndHeadline($conf->getWelcomeText(), $conf->getName(), $conf->getCity());
+    //foreach ()
 }
-/**
- * Build the bottom of the site
- */
-function buildBottom()
-{
-    echo "</div></body></html>";
-}
-//todo: Nur zu Testzwecken muss noch in die main oder gar controller?!?!?!
-$conference = buildConference();
-$welcome = $conference->getWelcomeText();
-$name = $conference->getName();
-$city = $conference->getCity();
-$date1 = $conference->getStartDate();
-$date2 = $conference->getEndDate();
-$sessionList = $conference->getSessionList();
-$roomList = $conference->getRoomList();
-$location = $conference->getLocation();
-buildHeaderAndHeadline($welcome, $name, $city);
-buildScheduleHead($date1);
-buildSchedulePart("ErsterTestDummy", "PHP für doofe", "Ich jedenfalls nicht");
-buildBottom();
+
+session_destroy();

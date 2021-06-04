@@ -6,18 +6,21 @@ class Speaker
     private $firstName;
     private $lastname;
     private $title;
+    private $salutation;
 
     /**
      * Speaker constructor.
      * @param string $firstName of the speaker
      * @param string $lastname of the speaker
      * @param string $title of the speaker
+     * @param string $salutation of the speaker
      */
-    public function __construct(string $firstName,string $lastname,string $title)
+    public function __construct(string $firstName,string $lastname,string $title, $salutation)
     {
         $this->firstName = $firstName;
         $this->lastname = $lastname;
         $this->title = $title;
+        $this->salutation = $salutation;
     }
 
     /**
@@ -42,6 +45,14 @@ class Speaker
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalutation(): string
+    {
+        return $this->salutation;
     }
 
 

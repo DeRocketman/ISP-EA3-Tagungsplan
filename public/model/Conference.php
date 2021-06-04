@@ -5,40 +5,49 @@ class Conference
 {
     private $name;
     private $welcomeText;
-    private $startDate;
-    private $endDate;
+    private $dates;
     private $city;
     private $location;
     private $roomList;
-    private $sessionList;
+    private $DayScheduleList;
     private $scheduleTimes;
 
     /**
      * Conference constructor.
      * @param string $name
      * @param string $welcomeText
-     * @param string $startDate
-     * @param string $endDate
+     * @param array $dates
      * @param string $city
      * @param string $location
      * @param array $roomList
-     * @param array $sessionList
+     * @param array $DayScheduleList
      * @param array $scheduleTimes
      */
-    public function __construct(string $name, string $welcomeText, string $startDate, string $endDate, string $city,
-                                string $location, array $roomList, array $sessionList, array $scheduleTimes)
+    public function __construct(string $name, string $welcomeText, array $dates, string $city, string $location,
+                                array $roomList, array $DayScheduleList, array $scheduleTimes)
     {
         $this->name = $name;
         $this->welcomeText = $welcomeText;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
+        $this->dates = $dates;
         $this->city = $city;
         $this->location = $location;
         $this->roomList = $roomList;
-        $this->sessionList = $sessionList;
+        $this->DayScheduleList = $DayScheduleList;
         $this->scheduleTimes = $scheduleTimes;
     }
 
+    public function createDaySchedules()
+    {
+        foreach($this->dates as $dates)
+        {
+            foreach ($this->roomList as $room)
+            {
+                $daySchedule = new DaySchedule($dates, $room);
+                $daySchedule->createSessionList($this->scheduleTimes);
+                array_push($this->DayScheduleList, $daySchedule);
+            }
+        }
+    }
     /**
      * @return string
      */
@@ -56,19 +65,11 @@ class Conference
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getStartDate(): string
+    public function getDates(): array
     {
-        return $this->startDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndDate(): string
-    {
-        return $this->endDate;
+        return $this->dates;
     }
 
     /**
@@ -98,25 +99,16 @@ class Conference
     /**
      * @return array
      */
-    public function getSessionList(): array
+    public function getDayScheduleList(): array
     {
-        return $this->sessionList;
+        return $this->DayScheduleList;
     }
 
     /**
-     * @param array $roomList
+     * @return array
      */
-    public function setRoomList(array $roomList)
+    public function getScheduleTimes(): array
     {
-        $this->roomList = $roomList;
+        return $this->scheduleTimes;
     }
-
-    /**
-     * @param array $sessionList
-     */
-    public function setSessionList(array $sessionList)
-    {
-        $this->sessionList = $sessionList;
-    }
-
 }

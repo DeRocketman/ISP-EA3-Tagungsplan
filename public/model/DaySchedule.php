@@ -11,13 +11,12 @@ class DaySchedule
      * SessionDaySchedule constructor.
      * @param string $date
      * @param string $room
-     * @param array $sessionList
      */
-    public function __construct(string $date,string $room,array $sessionList)
+    public function __construct(string $date,string $room)
     {
         $this->date = $date;
         $this->room = $room;
-        $this->sessionList = $sessionList;
+        $this->sessionList = [];
     }
 
     /**
@@ -68,7 +67,12 @@ class DaySchedule
         $this->sessionList = $sessionList;
     }
 
-
-
-
+    public function createSessionList(array $scheduleTimes)
+    {
+        foreach ($scheduleTimes as $timeslot)
+        {
+            $session = new Session($timeslot, "", "");
+            array_push($this->sessionList, $session);
+        }
+    }
 }

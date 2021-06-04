@@ -10,20 +10,18 @@ class Session
     private $theme;
     private $speaker;
 
-
     /**
      * Session constructor.
      * @param string $timeslot
      * @param string $theme
-     * @param array $speaker
+     * @param string $speaker
      */
-    public function __construct(string $timeslot, string $theme, array $speaker)
+    public function __construct(string $timeslot, string $theme, string $speaker)
     {
         $this->timeslot= $timeslot;
         $this->theme= $theme;
         $this->speaker= $speaker;
     }
-
 
     /**
      * @return string
@@ -58,17 +56,17 @@ class Session
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getSpeaker(): array
+    public function getSpeaker(): string
     {
         return $this->speaker;
     }
 
     /**
-     * @param array $speaker
+     * @param string $speaker
      */
-    public function setSpeaker(array $speaker)
+    public function setSpeaker(string $speaker)
     {
         $this->speaker = $speaker;
     }
