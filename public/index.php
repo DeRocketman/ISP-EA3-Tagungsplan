@@ -45,6 +45,7 @@ function buildStartSite()
     buildHeaderAndHeadline($conf->getWelcomeText(), $conf->getName(), $conf->getCity());
     foreach ($conf->getDayScheduleList() as $daySchedule)
     {
+        //todo: Fehler finden Zeile 49 wird nix gefunden!!
         $date = $daySchedule->getDate;
         buildScheduleHead($date);
         buildSchedulePart("DummyDatum", "DummyThema", "Hans Pusemukkel");
